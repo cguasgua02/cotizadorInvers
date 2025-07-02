@@ -635,28 +635,29 @@ const QuoteSuccess = ({ formData, onReset, quoteResults }) => {
   };
 
   const handlePayWithStripe = async () => {
-    // Asegúrate de que 'https://tu-api.com/api/crear-checkout' sea la URL de tu backend real
-    // donde implementaste la función 'crear-checkout.js'
     try {
-      const response = await fetch("https://tu-api.com/api/crear-checkout", {
+      const response = await fetch("/.netlify/functions/crear-checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: Number(quoteResults.descuento_por_accion_rapida), // Usamos el precio con descuento
-          email: formData.q12, // Correo electrónico del formulario
-          nombre_empresa: formData.q10 // Nombre de la empresa del formulario
-        })
+          amount: Number(quoteResults.descuento_por_accion_rapida), // valor con descuento
+          email: formData.q12, // correo del usuario
+          nombre_empresa: formData.q10 // nombre de la empresa
+        }),
       });
+
       const data = await response.json();
       if (data.url) {
-        window.location.href = data.url; // Redirige al checkout de Stripe
+        window.location.href = data.url; // redirige a Stripe
       } else {
-        alert('Error al iniciar el pago. Intenta de nuevo.');
+        alert("No se pudo generar el link de pago.");
+        console.error(data);
       }
     } catch (error) {
-      console.error('Error al conectar con el backend de Stripe:', error);
-      alert('Hubo un problema al procesar el pago. Por favor, inténtalo de nuevo más tarde.');
+      console.error("Error al crear checkout:", error);
+      alert("Hubo un error al conectar con Stripe.");
     }
+    
   };
 
   // Clases para el estilo de los recuadros con Neumorfismo
