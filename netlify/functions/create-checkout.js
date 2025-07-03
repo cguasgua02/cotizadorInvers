@@ -1,5 +1,5 @@
 
-const stripe = require('stripe')('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'); // Cambia por tu clave secreta real
+const stripe = require('stripe')('process.env.STRIPE_SECRET_KEY'); // Cambia por tu clave secreta real
 
 exports.handler = async function(event, context) {
   if (event.httpMethod !== 'POST') {
