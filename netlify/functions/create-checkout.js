@@ -28,7 +28,7 @@ exports.handler = async function(event, context) {
       mode: 'payment',
       customer_email: email,
       success_url: 'https://inverstudio.com/exito',
-      cancel_url: 'https://inverstudio.com/error-pago'
+      cancel_url: 'https://investudio-cotizador-inteligente.netlify.app/error.html?session_id={CHECKOUT_SESSION_ID}'
     });
 
     return {
