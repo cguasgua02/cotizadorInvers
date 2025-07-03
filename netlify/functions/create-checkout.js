@@ -27,8 +27,8 @@ exports.handler = async function(event, context) {
       }],
       mode: 'payment',
       customer_email: email,
-      success_url: 'https://tusitio.netlify.app/gracias',
-      cancel_url: 'https://tusitio.netlify.app/error'
+      success_url: 'https://inverstudio.com/exito',
+      cancel_url: 'https://inverstudio.com/error-pago'
     });
 
     return {
