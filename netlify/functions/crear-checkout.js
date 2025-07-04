@@ -26,8 +26,8 @@ exports.handler = async function(event, context) {
         },
       ],
       customer_email: email,
-      success_url: "https://tupagina.netlify.app/exito.html",
-      cancel_url: "https://tupagina.netlify.app/error.html",
+      success_url: 'https://inverstudio.com/exito',
+      cancel_url: 'https://investudio-cotizador-inteligente.netlify.app/error.html?session_id={CHECKOUT_SESSION_ID}',
     });
 
     console.log("✅ Session creada:", session);
