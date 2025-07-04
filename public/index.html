@@ -635,30 +635,41 @@ const QuoteSuccess = ({ formData, onReset, quoteResults }) => {
   };
 
   const handlePayWithStripe = async () => {
-    try {
-      const response = await fetch("/.netlify/functions/crear-checkout", {
+  try {
+    const response = await fetch("/.netlify/functions/crear-checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: Number(quoteResults.descuento_por_accion_rapida),
+        email: formData.q12,
+        nombre_empresa: formData.q10
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.url) {
+      // Enviar SOLO el email y el link de pago al webhook de actualización
+      await fetch("https://n8n-n8n.hqovcw.easypanel.host/webhook/actualizar-link-pago", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: Number(quoteResults.descuento_por_accion_rapida), // valor con descuento
-          email: formData.q12, // correo del usuario
-          nombre_empresa: formData.q10 // nombre de la empresa
+          correo: formData.q12,
+          link_pago: data.url
         }),
       });
 
-      const data = await response.json();
-      if (data.url) {
-        window.location.href = data.url; // redirige a Stripe
-      } else {
-        alert("No se pudo generar el link de pago.");
-        console.error(data);
-      }
-    } catch (error) {
-      console.error("Error al crear checkout:", error);
-      alert("Hubo un error al conectar con Stripe.");
+      window.location.href = data.url;
+    } else {
+      alert("No se pudo generar el link de pago.");
+      console.error(data);
     }
-    
-  };
+  } catch (error) {
+    console.error("Error al crear checkout:", error);
+    alert("Hubo un error al conectar con Stripe.");
+  }
+};
+
 
   // Clases para el estilo de los recuadros con Neumorfismo
   // Se asume que `bg` es gray-100, `shadow-dark` es gray-300, `shadow-light` es white.
