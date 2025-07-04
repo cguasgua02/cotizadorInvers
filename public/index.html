@@ -650,7 +650,7 @@ const QuoteSuccess = ({ formData, onReset, quoteResults }) => {
 
     if (data.url) {
       // Enviar SOLO el email y el link de pago al webhook de actualización
-      await fetch("https://n8n-n8n.hqovcw.easypanel.host/webhook/actualizar-link-pago", {
+      await fetch("https://n8n-n8n.hqovcw.easypanel.host/webhook-test/actualizar-link-pago", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
