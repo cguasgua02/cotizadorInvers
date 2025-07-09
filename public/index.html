@@ -549,7 +549,7 @@ const calculateQuote = (formData) => {
   
   const mensual_total = databaseMonthlyCost[database_size] || 250; // Valor por defecto para empresas pequeñas
 
-  const descuento_por_accion_rapida = 1 ;//setup_total * 0.85;
+  const descuento_por_accion_rapida = setup_total * 0.85;
   const ahorro = setup_total * 0.15;
 
   return {
