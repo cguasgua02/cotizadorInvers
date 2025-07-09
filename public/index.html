@@ -16,10 +16,10 @@
         <!-- Neumorphic Dark & Red Shadows -->
     <style>
       .shadow-neumorphic-dark {
-        box-shadow: 10px 10px 20px #9a9a9a, -8px -8px 16px #9a9a9a;
+        box-shadow: 10px 10px 20px #454545, -8px -8px 16px #454545;
       }
       .shadow-neumorphic-dark-hover {
-        box-shadow: 10px 10px 20px #9a9a9a, -10px -10px 20px #9a9a9a;
+        box-shadow: 10px 10px 20px #454545, -10px -10px 20px #454545;
       }
       .shadow-inner-neumorphic-dark {
         box-shadow: inset 2px 2px 5px #9a9a9a, inset -5px -5px 10px #9a9a9a;
@@ -494,7 +494,7 @@ const calculateQuote = (formData) => {
 
   // Lógica de precio acumulativo
   const usa_personalizacion_dinamica = n_personalizaciones > 0 ? (500 + (n_personalizaciones - 1) * 200) : 0;
-
+      
   // --- Función calcular_setup (adaptada de Python a JS) ---
   const calcular_setup = (
     database_size,
@@ -538,7 +538,16 @@ const calculateQuote = (formData) => {
     sector
   );
 
-  const mensual_total = 250; // Precio fijo mensual
+  //-- Calcular valor mensual --
+  // Para una empresa pequeña, el valor mensual es fijo, de 250 dolares. Para una empresa mediana, se añade un costo adicional de 100 dolares. Es decir se cobra 350 a empresas medianas. Para una empresa grande, se añade un valor adicional de 100 más. Es decir, se cobra 450 a empresas grandes.
+
+  const databaseMonthlyCost = {
+    1: 250, // Pequeña
+    2: 350, // Mediana
+    3: 450, // Grande
+  };
+  
+  const mensual_total = databaseMonthlyCost[database_size] || 250; // Valor por defecto para empresas pequeñas
 
   const descuento_por_accion_rapida = 1 ;//setup_total * 0.85;
   const ahorro = setup_total * 0.15;
