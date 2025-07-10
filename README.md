@@ -1,14 +1,39 @@
 # Cotizador Inteligente de Invers conectado a Stripe y Registro en Google Sheets
 
-Este proyecto permite cotizar automáticamente el valor de un asistente IA personalizado, mostrar la cotización en pantalla y redirigir al usuario a un **link de pago de Stripe**, además de registrar la información en **Google Sheets** mediante una automatización de **n8n**.
+**Cotizador Inteligente de Invers** es una aplicación web interactiva desarrollada con React y Tailwind CSS, desplegada en **Netlify**, que permite a negocios y empresas obtener una cotización automatizada para la implementación de agentes conversacionales basados en inteligencia artificial (IA).
+
+El objetivo es facilitar un proceso de levantamiento de información y cálculo de precios personalizado, en base a los requerimientos de cada empresa, como canales de atención, complejidad del agente, automatizaciones requeridas y tamaño del negocio.
+
+Este cotizador está diseñado para ser **inteligente, flexible y escalable**, permitiendo además registrar los datos en una hoja de **Google Sheets mediante n8n**, y generar un **enlace de pago en tiempo real con Stripe**.
+
+## Requisitos
+
+- Cuenta de n8n (Más adelante se provee el Workflow).
+- Cuenta en Netlify (Servicio Serverless para manejar backend y Frontend de la página)
+- API de Stripe. Secret Key.
+- API OAuth de Google Cloud y tener habilitado el Google Sheets API en Google Cloud
+- Para un servicio ininterrumpido se recomienda una VPS con interfaz de EasyPanel para correr el n8n de manera constante 
+
+## Ultimas actualizaciones
+
+2.0 : Se ha actualizado la lógica de precios mensual, para que responda de acuerdo a si es una empresa pequeña, mediana o grande. Se añaden los logos
+Primera Versión 1.0 : Se crea todo el sistema.
+
+## Mejoras Pendientes:
+
+- Se necesita desarrollar el botón de "Subir a Google Drive". Dentro de `index.html` se cuenta con la función `handleUploadToGoogleDrive` que debe tener una estructura similar al `handleSubmit` para que n8n se encargue de crear el documento ya sea `.json` o `.doc`.
+- Se necesita un favicon de nuestra empresa.
+- Siempre se puede mejorar la lógica de precios pues se sigue estudiantes los parámetros y las variables que hacen que esta función lineal sea más asertiva. 
 
 ## 🚀 Funcionalidades principales
 
-- 📋 Formulario web de cotización con validación en tiempo real
-- 📊 Lógica de precios dinámica basada en variables seleccionadas
-- 💸 Integración con Stripe para pago en línea (Checkout)
-- 📥 Registro automático en Google Sheets vía webhook de n8n
-- ✅ Páginas de confirmación y error personalizadas
+- 📝 **Formulario dinámico** con validación en tiempo real (JavaScript).
+- 📊 **Cálculo automático de cotización** según reglas de negocio configuradas (JavaScript).
+- 💸 **Cálculo de precio inicial, descuento, ahorro e inversión final.**
+- 📩 **Envío automático de datos a Google Sheets** usando **n8n** (sin servidor, API Google).
+- 💳 **Botón de pago con Stripe** que genera una sesión segura en tiempo real. (API Stripe)
+- 📦 **Exportación de datos** en formato JSON o subida a Google Drive (simulado).
+- 🌐 **Despliegue automático en Netlify** con flujos CI/CD desde GitHub.
 
 ---
 
@@ -23,18 +48,18 @@ Este proyecto permite cotizar automáticamente el valor de un asistente IA perso
 | **n8n**             | Webhook para guardar datos en Google Sheets |
 | **Google Sheets**   | Base de datos para registrar formularios  |
 
----
+## 🧮 Lógica de Cotización ¿Cómo calcula el precio?
+La lógica de precios incluye:
 
-## 🧠 Lógica de Cotización
-
-El cálculo de la cotización se basa en:
-- Tamaño del negocio (`clientes` y `sedes`)
-- Número de canales elegidos
-- Uso de agentes de texto o voz
-- Integración CRM o desde cero
-- Tareas del agente (ventas, soporte, interno)
-- Nivel de personalización requerido
-- Ubicación (nacional/internacional)
+- Tamaño de la base de datos (clientes + sedes).
+- Canales seleccionados (WhatsApp, webchat, etc.).
+- Tipo de agente requerido (texto, voz).
+- Automatizaciones (ventas, soporte, interno).
+- Complejidad del agente según roles seleccionados.
+- Operación nacional o internacional.
+- Descuento especial por acción rápida (48h).
+ 
+Toda la lógica está implementada en la sección `calculator.js`.
 
 💡 El sistema aplica un **descuento del 15%** si el usuario actúa en las primeras 48 horas.
 
