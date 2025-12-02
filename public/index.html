@@ -680,7 +680,7 @@ const QuoteSuccess = ({ formData, onReset, quoteResults }) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: Number(quoteResults.descuento_por_accion_rapida),
+        amount: (Number(quoteResults.descuento_por_accion_rapida)*0.5),
         email: formData.q12,
         nombre_empresa: formData.q10
       }),
